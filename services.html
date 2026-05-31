@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services — ArthikForce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+<style>
+/* ── TOKENS ── */
+:root{
+  --navy:#0d1f3c; --navy-light:#1a3260;
+  --red:#c0392b; --red-bright:#e74c3c;
+  --green:#3ecf8e; --green-light:#6ee7b7;
+  --green-pale:#e8fdf4; --green-mid:#2bb57e;
+  --white:#ffffff; --off-white:#f5f7f2;
+  --light-gray:#e4e9e2; --text-muted:#6b7280;
+  --head-font:'Plus Jakarta Sans',sans-serif;
+  --body-font:'Inter',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--body-font);background:var(--white);color:var(--navy);overflow-x:hidden;}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(62,207,142,.18);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 5%;height:72px;transition:height .3s,box-shadow .3s;
+}
+nav.scrolled{height:62px;box-shadow:0 4px 24px rgba(13,31,60,.08);}
+.nav-logo{display:flex;align-items:center;gap:11px;text-decoration:none;}
+.nav-logo-mark{width:40px;height:40px;background:var(--red);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--head-font);font-size:17px;font-weight:800;color:white;box-shadow:0 4px 12px rgba(192,57,43,.35);}
+.nav-brand{font-family:var(--head-font);font-size:20px;font-weight:800;color:var(--navy);letter-spacing:-.02em;}
+.nav-brand span{color:var(--green-mid);}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none;}
+.nav-links a{color:#374151;text-decoration:none;font-family:var(--body-font);font-size:13.5px;font-weight:500;padding:7px 13px;border-radius:8px;transition:color .2s,background .2s;}
+.nav-links a.active{color:var(--green-mid);background:rgba(62,207,142,.08);font-weight:600;}
+.nav-links a:not(.nav-cta):not(.nav-chat):not(.active):hover{color:var(--navy);background:rgba(13,31,60,.05);}
+.nav-cta{background:var(--red)!important;color:white!important;padding:9px 22px!important;border-radius:8px!important;font-weight:600!important;box-shadow:0 3px 10px rgba(192,57,43,.3);}
+.nav-cta:hover{background:var(--red-bright)!important;transform:translateY(-1px);}
+.nav-chat{background:rgba(62,207,142,.12)!important;border:1px solid rgba(62,207,142,.4)!important;color:var(--green-mid)!important;padding:7px 16px!important;border-radius:8px!important;display:inline-flex!important;align-items:center;gap:7px;font-weight:600!important;}
+.nav-chat:hover{background:rgba(62,207,142,.22)!important;}
+.nav-chat svg{width:15px;height:15px;fill:var(--green-mid);flex-shrink:0;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border:none;background:none;z-index:310;}
+.hamburger span{display:block;width:24px;height:2px;background:var(--navy);border-radius:2px;transition:all .3s;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;z-index:290;background:white;border-bottom:2px solid var(--green-pale);padding:20px 5% 28px;box-shadow:0 12px 40px rgba(13,31,60,.12);flex-direction:column;gap:4px;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{font-family:var(--body-font);font-size:15px;font-weight:500;color:#374151;text-decoration:none;padding:12px 14px;border-radius:8px;transition:background .2s,color .2s;}
+.mobile-menu a:hover{background:var(--off-white);color:var(--navy);}
+.mobile-menu-divider{height:1px;background:var(--light-gray);margin:12px 0;}
+.mobile-menu-btns{display:flex;flex-direction:column;gap:10px;}
+.mob-chat{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;background:rgba(62,207,142,.1);border:1px solid rgba(62,207,142,.35);color:var(--green-mid);}
+.mob-cta{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;background:var(--red);color:white;}
+.mobile-menu-btns svg{width:16px;height:16px;}
+
+/* ── FAB ── */
+.fab-stack{position:fixed;right:20px;bottom:28px;z-index:200;display:flex;flex-direction:column;gap:10px;}
+.fab{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 18px rgba(0,0,0,.25);transition:transform .25s,box-shadow .25s;}
+.fab:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.3);}
+.fab-wa{background:#25d366;}
+.fab-ph{background:var(--navy);border:2px solid rgba(62,207,142,.4);}
+.fab svg{width:24px;height:24px;}
+
+/* ── SHARED ── */
+.section-label{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--green-mid);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.section-label::before{content:'';width:20px;height:2px;background:var(--green);border-radius:2px;}
+.section-title{font-family:var(--head-font);font-size:clamp(28px,3.2vw,46px);font-weight:800;line-height:1.12;letter-spacing:-.025em;color:var(--navy);margin-bottom:16px;}
+.section-title .accent{color:var(--green-mid);}
+.section-title .accent-red{color:var(--red);}
+.section-desc{font-size:16px;color:#4b5563;line-height:1.8;max-width:600px;}
+.btn-primary{background:var(--red);color:white;padding:13px 28px;font-family:var(--body-font);font-size:14px;font-weight:600;letter-spacing:.02em;border:none;border-radius:10px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:9px;box-shadow:0 4px 16px rgba(192,57,43,.28);transition:all .25s;}
+.btn-primary:hover{background:var(--red-bright);transform:translateY(-2px);box-shadow:0 8px 24px rgba(192,57,43,.35);}
+.btn-green{background:var(--green-mid);color:white;padding:13px 28px;font-family:var(--body-font);font-size:14px;font-weight:600;border:none;border-radius:10px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:9px;box-shadow:0 4px 16px rgba(43,181,126,.28);transition:all .25s;}
+.btn-green:hover{background:var(--green-mid);filter:brightness(1.08);transform:translateY(-2px);}
+.btn-outline{background:transparent;color:var(--navy);padding:12px 26px;font-size:14px;font-weight:600;border:1.5px solid var(--light-gray);border-radius:10px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:9px;transition:all .25s;}
+.btn-outline:hover{border-color:var(--green);color:var(--green-mid);}
+
+/* ── HERO BANNER ── */
+.page-hero{
+  min-height:68vh;
+  background:
+    radial-gradient(ellipse 70% 80% at 10% 60%, rgba(62,207,142,.18) 0%,transparent 55%),
+    radial-gradient(ellipse 60% 60% at 90% 20%, rgba(192,57,43,.1) 0%,transparent 50%),
+    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(13,31,60,.1) 0%,transparent 60%),
+    linear-gradient(155deg,#e8fdf4 0%,#f0faf6 35%,#eef5ff 65%,#f5f7f2 100%);
+  padding:130px 5% 80px;
+  display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:center;
+  position:relative;overflow:hidden;
+}
+.page-hero-blob{position:absolute;border-radius:50%;filter:blur(64px);pointer-events:none;opacity:.5;}
+.ph-blob-1{width:440px;height:440px;background:rgba(62,207,142,.22);top:-80px;left:-100px;animation:b1 9s ease-in-out infinite;}
+.ph-blob-2{width:320px;height:320px;background:rgba(192,57,43,.09);bottom:0;right:-60px;animation:b2 11s ease-in-out infinite;}
+@keyframes b1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,30px) scale(1.07)}}
+@keyframes b2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-30px,20px) scale(1.05)}}
+.page-hero-left{position:relative;z-index:2;}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:12.5px;color:#9ca3af;margin-bottom:20px;}
+.breadcrumb a{color:#9ca3af;text-decoration:none;transition:color .2s;}
+.breadcrumb a:hover{color:var(--green-mid);}
+.breadcrumb span{color:var(--green-mid);font-weight:600;}
+.breadcrumb svg{width:12px;height:12px;stroke:#c9d0d8;flex-shrink:0;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(62,207,142,.12);border:1px solid rgba(62,207,142,.35);color:var(--green-mid);font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:7px 16px;border-radius:50px;margin-bottom:20px;}
+.hero-badge-dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
+.page-hero-title{font-family:var(--head-font);font-size:clamp(36px,4.5vw,58px);font-weight:800;line-height:1.1;letter-spacing:-.03em;color:var(--navy);margin-bottom:20px;}
+.page-hero-title .accent{color:var(--green-mid);}
+.page-hero-desc{font-size:16.5px;color:#4b5563;line-height:1.78;max-width:500px;margin-bottom:36px;}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+
+/* hero right cards */
+.page-hero-right{position:relative;z-index:2;display:flex;flex-direction:column;gap:14px;}
+.hero-service-pill{
+  background:white;border-radius:14px;padding:18px 22px;
+  border:1px solid rgba(62,207,142,.14);
+  box-shadow:0 4px 18px rgba(13,31,60,.06);
+  display:flex;align-items:center;gap:16px;
+  transition:all .28s;cursor:default;
+}
+.hero-service-pill:hover{transform:translateX(8px);border-color:rgba(62,207,142,.35);box-shadow:0 6px 24px rgba(62,207,142,.12);}
+.pill-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.pi-green{background:var(--green-pale);}
+.pi-red{background:rgba(192,57,43,.08);}
+.pi-navy{background:rgba(13,31,60,.06);}
+.pill-icon svg{width:22px;height:22px;}
+.pill-label{font-family:var(--head-font);font-size:14px;font-weight:700;color:var(--navy);}
+.pill-sub{font-size:12px;color:#9ca3af;margin-top:2px;}
+.pill-arrow{margin-left:auto;font-size:18px;color:var(--light-gray);}
+
+/* ── SERVICE TABS ── */
+.service-tabs-section{background:var(--off-white);padding:80px 5%;}
+.tabs-header{text-align:center;margin-bottom:52px;}
+.tabs-header .section-label{justify-content:center;}
+.tab-nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:52px;}
+.tab-btn{
+  font-family:var(--body-font);font-size:13.5px;font-weight:500;
+  padding:10px 22px;border-radius:50px;border:1.5px solid var(--light-gray);
+  background:white;color:#6b7280;cursor:pointer;
+  transition:all .25s;white-space:nowrap;
+}
+.tab-btn:hover{border-color:var(--green);color:var(--green-mid);}
+.tab-btn.active{background:var(--green-mid);border-color:var(--green-mid);color:white;font-weight:600;box-shadow:0 4px 14px rgba(43,181,126,.3);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* SERVICE DETAIL CARD */
+.svc-detail{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;}
+.svc-detail.reverse{direction:rtl;}
+.svc-detail.reverse>*{direction:ltr;}
+.svc-visual{position:relative;}
+.svc-img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:20px;box-shadow:0 16px 48px rgba(13,31,60,.12);}
+.svc-accent{position:absolute;bottom:-20px;left:-20px;width:140px;height:140px;border-radius:18px;z-index:-1;opacity:.5;}
+.svc-badge-float{
+  position:absolute;top:20px;right:-20px;
+  background:white;border-radius:14px;padding:14px 18px;
+  box-shadow:0 8px 28px rgba(13,31,60,.12);
+  border:1px solid rgba(62,207,142,.2);
+  z-index:2;
+}
+.svc-badge-num{font-family:var(--head-font);font-size:26px;font-weight:800;color:var(--navy);line-height:1;letter-spacing:-.02em;}
+.svc-badge-num span{color:var(--green-mid);}
+.svc-badge-label{font-size:11px;color:#9ca3af;letter-spacing:.06em;text-transform:uppercase;margin-top:3px;}
+.svc-content .section-label{margin-bottom:10px;}
+.svc-steps{display:flex;flex-direction:column;gap:16px;margin:28px 0;}
+.svc-step{display:flex;gap:16px;align-items:flex-start;}
+.step-num{
+  width:32px;height:32px;flex-shrink:0;
+  background:var(--green-pale);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--head-font);font-size:13px;font-weight:800;color:var(--green-mid);
+}
+.step-text h4{font-family:var(--head-font);font-size:14px;font-weight:700;color:var(--navy);margin-bottom:3px;}
+.step-text p{font-size:13px;color:#6b7280;line-height:1.6;}
+.svc-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px;}
+.svc-tag{font-size:12px;font-weight:500;color:var(--green-mid);background:var(--green-pale);border:1px solid rgba(62,207,142,.25);padding:5px 12px;border-radius:50px;}
+.svc-tag.red{color:var(--red);background:rgba(192,57,43,.06);border-color:rgba(192,57,43,.2);}
+.svc-tag.navy{color:var(--navy);background:rgba(13,31,60,.06);border-color:rgba(13,31,60,.15);}
+
+/* ── ALL SERVICES GRID ── */
+.all-services{padding:96px 5%;background:white;}
+.all-services-header{text-align:center;margin-bottom:60px;}
+.all-services-header .section-label{justify-content:center;}
+.all-services-header .section-desc{margin:0 auto;}
+.services-big-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.svc-card{
+  background:var(--off-white);border:1px solid rgba(62,207,142,.1);
+  border-radius:20px;padding:36px 32px;
+  position:relative;overflow:hidden;cursor:pointer;
+  transition:all .35s;
+}
+.svc-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(62,207,142,.06) 0%,transparent 60%);opacity:0;transition:opacity .35s;}
+.svc-card:hover{transform:translateY(-8px);box-shadow:0 24px 56px rgba(13,31,60,.1);border-color:rgba(62,207,142,.3);}
+.svc-card:hover::before{opacity:1;}
+.svc-card-num{font-family:var(--head-font);font-size:52px;font-weight:800;color:rgba(62,207,142,.1);line-height:1;letter-spacing:-.03em;margin-bottom:16px;}
+.svc-card-icon{width:56px;height:56px;background:var(--green-pale);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;transition:background .3s,transform .3s;}
+.svc-card:hover .svc-card-icon{background:rgba(192,57,43,.08);transform:scale(1.08);}
+.svc-card-icon svg{width:26px;height:26px;stroke:var(--green-mid);transition:stroke .3s;}
+.svc-card:hover .svc-card-icon svg{stroke:var(--red);}
+.svc-card h3{font-family:var(--head-font);font-size:20px;font-weight:700;color:var(--navy);margin-bottom:10px;letter-spacing:-.01em;}
+.svc-card p{font-size:14px;color:#6b7280;line-height:1.75;margin-bottom:20px;}
+.svc-card-features{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:24px;}
+.svc-card-features li{font-size:13px;color:#4b5563;display:flex;align-items:center;gap:8px;}
+.svc-card-features li::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;flex-shrink:0;}
+.svc-card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:18px;border-top:1px solid var(--light-gray);}
+.svc-card-link{font-size:13px;font-weight:600;color:var(--green-mid);text-decoration:none;display:flex;align-items:center;gap:6px;transition:gap .2s;}
+.svc-card:hover .svc-card-link{gap:10px;}
+.svc-card-badge{font-size:11px;font-weight:600;letter-spacing:.04em;background:var(--green-pale);color:var(--green-mid);padding:4px 10px;border-radius:50px;}
+.svc-card-badge.popular{background:rgba(192,57,43,.08);color:var(--red);}
+
+/* ── PROCESS SECTION ── */
+.process{background:var(--off-white);padding:96px 5%;}
+.process-header{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end;margin-bottom:64px;}
+.process-header-right{font-size:15px;color:#6b7280;line-height:1.8;border-left:3px solid var(--green);padding-left:22px;}
+.process-timeline{position:relative;}
+.process-timeline::before{content:'';position:absolute;left:31px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--green),rgba(62,207,142,.1));border-radius:2px;}
+.process-step{display:flex;gap:28px;align-items:flex-start;margin-bottom:44px;position:relative;}
+.process-step:last-child{margin-bottom:0;}
+.process-num{
+  width:64px;height:64px;flex-shrink:0;border-radius:16px;
+  background:white;border:2px solid var(--light-gray);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--head-font);font-size:20px;font-weight:800;
+  color:var(--navy);z-index:1;position:relative;
+  box-shadow:0 4px 14px rgba(13,31,60,.06);
+  transition:all .3s;
+}
+.process-step:hover .process-num{background:var(--green-mid);border-color:var(--green-mid);color:white;box-shadow:0 6px 20px rgba(62,207,142,.35);}
+.process-body{background:white;border-radius:16px;padding:28px 32px;flex:1;border:1px solid rgba(62,207,142,.1);box-shadow:0 2px 10px rgba(13,31,60,.04);transition:all .3s;}
+.process-step:hover .process-body{border-color:rgba(62,207,142,.3);box-shadow:0 8px 28px rgba(13,31,60,.08);}
+.process-body h3{font-family:var(--head-font);font-size:18px;font-weight:700;color:var(--navy);margin-bottom:8px;letter-spacing:-.01em;}
+.process-body p{font-size:14px;color:#6b7280;line-height:1.72;}
+.process-body-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px;}
+.process-chip{font-size:11.5px;font-weight:500;background:var(--green-pale);color:var(--green-mid);padding:4px 11px;border-radius:50px;}
+
+/* ── PRICING ── */
+.pricing{background:white;padding:96px 5%;}
+.pricing-header{text-align:center;margin-bottom:60px;}
+.pricing-header .section-label{justify-content:center;}
+.pricing-header .section-desc{margin:0 auto;}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start;}
+.pricing-card{background:var(--off-white);border:1.5px solid var(--light-gray);border-radius:20px;padding:36px 32px;transition:all .3s;position:relative;}
+.pricing-card.featured{background:var(--navy);border-color:var(--navy);box-shadow:0 20px 60px rgba(13,31,60,.2);}
+.pricing-card:not(.featured):hover{transform:translateY(-6px);box-shadow:0 16px 44px rgba(13,31,60,.08);border-color:rgba(62,207,142,.3);}
+.featured-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--green-mid);color:white;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 16px;border-radius:50px;white-space:nowrap;box-shadow:0 4px 12px rgba(43,181,126,.4);}
+.pricing-tier{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green-mid);margin-bottom:12px;}
+.featured .pricing-tier{color:var(--green-light);}
+.pricing-price{font-family:var(--head-font);font-size:40px;font-weight:800;color:var(--navy);line-height:1;letter-spacing:-.02em;margin-bottom:4px;}
+.featured .pricing-price{color:white;}
+.pricing-price sub{font-size:16px;font-weight:500;vertical-align:baseline;margin-right:2px;}
+.pricing-cycle{font-size:13px;color:#9ca3af;margin-bottom:22px;}
+.featured .pricing-cycle{color:rgba(255,255,255,.5);}
+.pricing-divider{height:1px;background:var(--light-gray);margin-bottom:22px;}
+.featured .pricing-divider{background:rgba(255,255,255,.1);}
+.pricing-features{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:28px;}
+.pricing-features li{font-size:14px;color:#374151;display:flex;align-items:center;gap:10px;}
+.featured .pricing-features li{color:rgba(255,255,255,.8);}
+.pricing-features li svg{width:16px;height:16px;flex-shrink:0;}
+.pricing-features li.check svg{stroke:var(--green-mid);}
+.pricing-features li.cross{color:#9ca3af;text-decoration:line-through;}
+.pricing-features li.cross svg{stroke:#d1d5db;}
+.featured .pricing-features li.cross{color:rgba(255,255,255,.3);}
+.pricing-btn{width:100%;padding:14px;border:none;border-radius:10px;font-family:var(--body-font);font-size:14px;font-weight:600;cursor:pointer;transition:all .25s;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;}
+.pricing-btn-outline{background:transparent;color:var(--navy);border:1.5px solid var(--light-gray);}
+.pricing-btn-outline:hover{border-color:var(--green);color:var(--green-mid);}
+.pricing-btn-filled{background:var(--green-mid);color:white;box-shadow:0 4px 14px rgba(43,181,126,.35);}
+.pricing-btn-filled:hover{filter:brightness(1.08);transform:translateY(-2px);}
+
+/* ── INDUSTRIES ── */
+.industries{background:var(--off-white);padding:96px 5%;}
+.industries-header{text-align:center;margin-bottom:52px;}
+.industries-header .section-label{justify-content:center;}
+.industries-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.ind-card{background:white;border:1px solid rgba(62,207,142,.1);border-radius:16px;padding:28px 24px;text-align:center;transition:all .28s;cursor:default;}
+.ind-card:hover{transform:translateY(-5px);box-shadow:0 12px 32px rgba(13,31,60,.08);border-color:rgba(62,207,142,.3);}
+.ind-icon{width:56px;height:56px;background:var(--green-pale);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;transition:background .3s;}
+.ind-card:hover .ind-icon{background:rgba(192,57,43,.08);}
+.ind-icon svg{width:26px;height:26px;stroke:var(--green-mid);transition:stroke .3s;}
+.ind-card:hover .ind-icon svg{stroke:var(--red);}
+.ind-card h4{font-family:var(--head-font);font-size:14px;font-weight:700;color:var(--navy);margin-bottom:5px;}
+.ind-card p{font-size:12px;color:#9ca3af;line-height:1.5;}
+
+/* ── TOOLS ── */
+.tools-section{background:white;padding:80px 5%;overflow:hidden;}
+.tools-header{text-align:center;margin-bottom:48px;}
+.tools-header .section-label{justify-content:center;}
+.tools-marquee-wrap{overflow:hidden;position:relative;}
+.tools-marquee-wrap::before,.tools-marquee-wrap::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;}
+.tools-marquee-wrap::before{left:0;background:linear-gradient(90deg,white,transparent);}
+.tools-marquee-wrap::after{right:0;background:linear-gradient(-90deg,white,transparent);}
+.tools-marquee{display:flex;gap:14px;width:max-content;animation:marquee 28s linear infinite;}
+.tools-marquee:hover{animation-play-state:paused;}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tool-chip{
+  background:var(--off-white);border:1px solid var(--light-gray);border-radius:50px;
+  padding:10px 20px;font-size:13px;font-weight:500;color:#374151;
+  display:flex;align-items:center;gap:8px;white-space:nowrap;
+  transition:all .25s;cursor:default;
+}
+.tool-chip:hover{border-color:var(--green);color:var(--green-mid);background:var(--green-pale);}
+.tool-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;}
+
+/* ── RESULTS / METRICS ── */
+.results{
+  padding:96px 5%;
+  background:
+    radial-gradient(ellipse 60% 80% at 0% 50%, rgba(62,207,142,.12) 0%,transparent 55%),
+    radial-gradient(ellipse 50% 60% at 100% 30%, rgba(192,57,43,.06) 0%,transparent 50%),
+    var(--off-white);
+}
+.results-header{text-align:center;margin-bottom:60px;}
+.results-header .section-label{justify-content:center;}
+.results-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:48px;}
+.result-card{background:white;border:1px solid rgba(62,207,142,.14);border-radius:18px;padding:32px 24px;text-align:center;transition:all .3s;box-shadow:0 2px 10px rgba(13,31,60,.04);}
+.result-card:hover{transform:translateY(-6px);box-shadow:0 14px 36px rgba(62,207,142,.14);border-color:rgba(62,207,142,.35);}
+.result-icon{width:52px;height:52px;border-radius:13px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;}
+.result-icon svg{width:24px;height:24px;stroke:var(--green-mid);}
+.result-num{font-family:var(--head-font);font-size:40px;font-weight:800;color:var(--navy);line-height:1;letter-spacing:-.02em;margin-bottom:6px;}
+.result-num span{color:var(--green-mid);}
+.result-label{font-size:13px;color:#6b7280;font-weight:500;letter-spacing:.03em;}
+.case-strip{background:var(--navy);border-radius:20px;padding:40px 48px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;}
+.case-strip-text h3{font-family:var(--head-font);font-size:24px;font-weight:800;color:white;letter-spacing:-.02em;margin-bottom:10px;}
+.case-strip-text p{font-size:15px;color:rgba(255,255,255,.6);line-height:1.7;}
+.case-strip-stats{display:flex;gap:32px;}
+.cs-stat-num{font-family:var(--head-font);font-size:36px;font-weight:800;color:white;line-height:1;letter-spacing:-.02em;}
+.cs-stat-num span{color:var(--green-light);}
+.cs-stat-label{font-size:11.5px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.08em;margin-top:5px;}
+
+/* ── FAQ ── */
+.faq{background:white;padding:96px 5%;}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+.faq-items{display:flex;flex-direction:column;gap:8px;}
+.faq-item{border:1px solid var(--light-gray);border-radius:14px;overflow:hidden;transition:border-color .25s;}
+.faq-item.open{border-color:rgba(62,207,142,.35);}
+.faq-question{
+  width:100%;text-align:left;background:none;border:none;
+  padding:20px 22px;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;gap:14px;
+  font-family:var(--body-font);font-size:15px;font-weight:600;color:var(--navy);
+  transition:background .2s;
+}
+.faq-question:hover{background:var(--off-white);}
+.faq-item.open .faq-question{background:var(--green-pale);color:var(--green-mid);}
+.faq-icon{width:24px;height:24px;background:var(--light-gray);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s;}
+.faq-item.open .faq-icon{background:var(--green-mid);transform:rotate(45deg);}
+.faq-icon svg{width:12px;height:12px;stroke:var(--navy);transition:stroke .3s;}
+.faq-item.open .faq-icon svg{stroke:white;}
+.faq-answer{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;}
+.faq-item.open .faq-answer{max-height:200px;}
+.faq-answer-inner{padding:0 22px 18px;font-size:14px;color:#6b7280;line-height:1.75;}
+.faq-cta-box{background:var(--off-white);border-radius:18px;padding:36px;position:sticky;top:100px;}
+.faq-cta-box h3{font-family:var(--head-font);font-size:22px;font-weight:800;color:var(--navy);letter-spacing:-.02em;margin-bottom:10px;}
+.faq-cta-box p{font-size:14px;color:#6b7280;line-height:1.7;margin-bottom:24px;}
+.faq-cta-contacts{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+.faq-contact-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:white;border-radius:10px;border:1px solid var(--light-gray);text-decoration:none;transition:border-color .2s;}
+.faq-contact-row:hover{border-color:var(--green);}
+.faq-ci{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.faq-ci.wa{background:rgba(37,211,102,.1);}
+.faq-ci.ph{background:rgba(62,207,142,.1);}
+.faq-ci.em{background:rgba(13,31,60,.06);}
+.faq-ci svg{width:18px;height:18px;}
+.faq-contact-label{font-size:11px;color:#9ca3af;letter-spacing:.04em;text-transform:uppercase;}
+.faq-contact-val{font-size:14px;font-weight:600;color:var(--navy);}
+
+/* ── CTA STRIP ── */
+.cta-strip{background:linear-gradient(135deg,var(--red),#a93226);padding:64px 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:28px;position:relative;overflow:hidden;}
+.cta-strip::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;background:rgba(255,255,255,.06);border-radius:50%;}
+.cta-strip-text h2{font-family:var(--head-font);font-size:clamp(22px,3vw,34px);font-weight:800;color:white;letter-spacing:-.02em;margin-bottom:6px;}
+.cta-strip-text p{font-size:15px;color:rgba(255,255,255,.75);}
+.btn-white{background:white;color:var(--red);padding:14px 32px;font-size:14px;font-weight:700;border:none;border-radius:10px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:9px;white-space:nowrap;transition:all .25s;box-shadow:0 4px 14px rgba(0,0,0,.15);position:relative;z-index:1;}
+.btn-white:hover{background:var(--navy);color:white;transform:translateY(-2px);}
+
+/* ── FOOTER ── */
+footer{background:var(--navy);padding:60px 5% 0;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.08);}
+.footer-brand-col .footer-brand{font-family:var(--head-font);font-size:22px;font-weight:800;color:white;letter-spacing:-.02em;}
+.footer-brand-col .footer-brand span{color:var(--green-light);}
+.footer-brand-col .footer-tagline{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:5px;margin-bottom:18px;}
+.footer-brand-col p{font-size:13px;color:rgba(255,255,255,.45);line-height:1.7;}
+.footer-col h4{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:18px;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.footer-col ul a{font-size:13px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s;}
+.footer-col ul a:hover{color:var(--green-light);}
+.footer-bottom{padding:20px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-bottom p{font-size:12px;color:rgba(255,255,255,.25);}
+.footer-socials{display:flex;gap:10px;}
+.footer-socials a{width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:all .2s;}
+.footer-socials a:hover{background:var(--green);border-color:var(--green);}
+.footer-socials svg{width:15px;height:15px;fill:rgba(255,255,255,.6);}
+.footer-socials a:hover svg{fill:var(--navy);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  .page-hero{grid-template-columns:1fr;min-height:auto;}
+  .page-hero-right{display:none;}
+  .svc-detail{grid-template-columns:1fr;}
+  .svc-detail.reverse{direction:ltr;}
+  .services-big-grid{grid-template-columns:1fr 1fr;}
+  .process-header,.faq-grid{grid-template-columns:1fr;}
+  .pricing-grid{grid-template-columns:1fr;}
+  .industries-grid{grid-template-columns:1fr 1fr;}
+  .results-grid{grid-template-columns:1fr 1fr;}
+  .case-strip{grid-template-columns:1fr;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .services-big-grid{grid-template-columns:1fr;}
+  .industries-grid{grid-template-columns:1fr 1fr;}
+  .results-grid{grid-template-columns:1fr 1fr;}
+  .pricing-grid{grid-template-columns:1fr;}
+  .cta-strip{flex-direction:column;text-align:center;}
+  .footer-top{grid-template-columns:1fr;}
+  .tab-nav{gap:6px;}
+}
+@media(max-width:480px){
+  .industries-grid{grid-template-columns:1fr 1fr;}
+  .results-grid{grid-template-columns:1fr 1fr;}
+  .case-strip-stats{flex-wrap:wrap;gap:20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- FABs -->
+<div class="fab-stack">
+  <a href="https://wa.me/919841614141" class="fab fab-wa" target="_blank">
+    <svg viewBox="0 0 32 32" fill="white"><path d="M16 3C9.373 3 4 8.373 4 15c0 2.385.832 4.584 2.219 6.334L4.5 28l6.875-1.688A12.93 12.93 0 0016 27c6.627 0 12-5.373 12-12S22.627 3 16 3zm5.406 13.48c-.296-.148-1.75-.864-2.022-.963-.271-.1-.469-.148-.666.149-.198.296-.766.963-.939 1.16-.173.198-.346.222-.642.074-.296-.148-1.25-.46-2.38-1.47-.88-.783-1.474-1.75-1.647-2.046-.173-.296-.018-.456.13-.604.133-.132.296-.346.444-.519.148-.173.198-.296.296-.494.1-.198.05-.372-.025-.52-.074-.148-.666-1.61-.913-2.202-.24-.578-.484-.5-.666-.51a12.3 12.3 0 00-.57-.011c-.198 0-.52.074-.792.371-.271.296-1.04 1.017-1.04 2.479s1.065 2.875 1.213 3.073c.148.198 2.095 3.2 5.076 4.487.71.307 1.264.49 1.695.627.712.226 1.36.194 1.872.118.571-.085 1.75-.716 1.997-1.406.247-.69.247-1.28.173-1.406-.074-.123-.272-.198-.568-.346z"/></svg>
+  </a>
+  <a href="tel:+919841614141" class="fab fab-ph">
+    <svg viewBox="0 0 24 24" fill="#3ecf8e"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.47 11.47 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.47 11.47 0 00.57 3.58 1 1 0 01-.25 1.01l-2.2 2.2z"/></svg>
+  </a>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-mark">AF</div>
+    <span class="nav-brand">Arthik<span>Force</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html" class="active">Services</a></li>
+    <li><a href="about-us.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li>
+      <a href="https://wa.me/919841614141" class="nav-chat" target="_blank">
+        <svg viewBox="0 0 32 32"><path d="M16 3C9.373 3 4 8.373 4 15c0 2.385.832 4.584 2.219 6.334L4.5 28l6.875-1.688A12.93 12.93 0 0016 27c6.627 0 12-5.373 12-12S22.627 3 16 3zm5.406 13.48c-.296-.148-1.75-.864-2.022-.963-.271-.1-.469-.148-.666.149-.198.296-.766.963-.939 1.16-.173.198-.346.222-.642.074-.296-.148-1.25-.46-2.38-1.47-.88-.783-1.474-1.75-1.647-2.046-.173-.296-.018-.456.13-.604.133-.132.296-.346.444-.519.148-.173.198-.296.296-.494.1-.198.05-.372-.025-.52-.074-.148-.666-1.61-.913-2.202-.24-.578-.484-.5-.666-.51a12.3 12.3 0 00-.57-.011c-.198 0-.52.074-.792.371-.271.296-1.04 1.017-1.04 2.479s1.065 2.875 1.213 3.073c.148.198 2.095 3.2 5.076 4.487.71.307 1.264.49 1.695.627.712.226 1.36.194 1.872.118.571-.085 1.75-.716 1.997-1.406.247-.69.247-1.28.173-1.406-.074-.123-.272-.198-.568-.346z"/></svg>
+        Chat With Us
+      </a>
+    </li>
+    <li><a href="contact.html" class="nav-cta">Get Started</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="services.html">Services</a>
+  <a href="about-us.html">About</a>
+  <a href="contact.html">Contact</a>
+  <div class="mobile-menu-divider"></div>
+  <div class="mobile-menu-btns">
+    <a href="https://wa.me/919841614141" class="mob-chat" target="_blank">
+      <svg viewBox="0 0 32 32" fill="#25d366"><path d="M16 3C9.373 3 4 8.373 4 15c0 2.385.832 4.584 2.219 6.334L4.5 28l6.875-1.688A12.93 12.93 0 0016 27c6.627 0 12-5.373 12-12S22.627 3 16 3zm5.406 13.48c-.296-.148-1.75-.864-2.022-.963-.271-.1-.469-.148-.666.149-.198.296-.766.963-.939 1.16-.173.198-.346.222-.642.074-.296-.148-1.25-.46-2.38-1.47-.88-.783-1.474-1.75-1.647-2.046-.173-.296-.018-.456.13-.604.133-.132.296-.346.444-.519.148-.173.198-.296.296-.494.1-.198.05-.372-.025-.52-.074-.148-.666-1.61-.913-2.202-.24-.578-.484-.5-.666-.51a12.3 12.3 0 00-.57-.011c-.198 0-.52.074-.792.371-.271.296-1.04 1.017-1.04 2.479s1.065 2.875 1.213 3.073c.148.198 2.095 3.2 5.076 4.487.71.307 1.264.49 1.695.627.712.226 1.36.194 1.872.118.571-.085 1.75-.716 1.997-1.406.247-.69.247-1.28.173-1.406-.074-.123-.272-.198-.568-.346z"/></svg>
+      Chat With Us
+    </a>
+    <a href="contact.html" class="mob-cta">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      Get Started
+    </a>
+  </div>
+</div>
+
+<!-- ═══ HERO BANNER ═══ -->
+<section class="page-hero">
+  <div class="page-hero-blob ph-blob-1"></div>
+  <div class="page-hero-blob ph-blob-2"></div>
+
+  <div class="page-hero-left">
+    <div class="breadcrumb" data-aos="fade-down" data-aos-duration="500">
+      <a href="arthikforce-homepage.html">Home</a>
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      <span>Services</span>
+    </div>
+    <div class="hero-badge" data-aos="fade-down" data-aos-duration="600" data-aos-delay="60">
+      <span class="hero-badge-dot"></span>
+      What We Offer
+    </div>
+    <h1 class="page-hero-title" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">
+      Growth Services<br>Built for <span class="accent">Modern</span><br>B2B Businesses
+    </h1>
+    <p class="page-hero-desc" data-aos="fade-up" data-aos-duration="700" data-aos-delay="190">
+      From intent-based demand generation to full lifecycle marketing and brand building — every ArthikForce service is engineered to connect your message to revenue.
+    </p>
+    <div class="hero-actions" data-aos="fade-up" data-aos-duration="700" data-aos-delay="270">
+      <a href="#all-services" class="btn-primary">
+        Explore Services
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="arthikforce-homepage.html#contact" class="btn-outline">Book a Free Call</a>
+    </div>
+  </div>
+
+  <div class="page-hero-right" data-aos="fade-left" data-aos-duration="700" data-aos-delay="150">
+    <div class="hero-service-pill">
+      <div class="pill-icon pi-green">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--green-mid)" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      </div>
+      <div>
+        <div class="pill-label">Sales Enablement</div>
+        <div class="pill-sub">Intent signals · Pipeline acceleration</div>
+      </div>
+      <span class="pill-arrow">→</span>
+    </div>
+    <div class="hero-service-pill">
+      <div class="pill-icon pi-red">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <div>
+        <div class="pill-label">Lifecycle Marketing</div>
+        <div class="pill-sub">Nurture · Convert · Retain · Expand</div>
+      </div>
+      <span class="pill-arrow">→</span>
+    </div>
+    <div class="hero-service-pill">
+      <div class="pill-icon pi-navy">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </div>
+      <div>
+        <div class="pill-label">Digital Branding</div>
+        <div class="pill-sub">Identity · Presence · Authority</div>
+      </div>
+      <span class="pill-arrow">→</span>
+    </div>
+    <div class="hero-service-pill">
+      <div class="pill-icon pi-green">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--green-mid)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      </div>
+      <div>
+        <div class="pill-label">Demand Generation</div>
+        <div class="pill-sub">ABM · Content · Paid strategy</div>
+      </div>
+      <span class="pill-arrow">→</span>
+    </div>
+    <div class="hero-service-pill">
+      <div class="pill-icon pi-red">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4"/><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/></svg>
+      </div>
+      <div>
+        <div class="pill-label">Revenue Operations</div>
+        <div class="pill-sub">CRM · Reporting · Attribution</div>
+      </div>
+      <span class="pill-arrow">→</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SERVICE TABS (DEEP DIVES) ═══ -->
+<section class="service-tabs-section" id="deep-dive">
+  <div class="tabs-header" data-aos="fade-up" data-aos-duration="600">
+    <div class="section-label">Deep Dive</div>
+    <h2 class="section-title">Explore Each <span class="accent">Service</span></h2>
+  </div>
+
+  <div class="tab-nav" data-aos="fade-up" data-aos-duration="600" data-aos-delay="80">
+    <button class="tab-btn active" onclick="switchTab('sales')">Sales Enablement</button>
+    <button class="tab-btn" onclick="switchTab('lifecycle')">Lifecycle Marketing</button>
+    <button class="tab-btn" onclick="switchTab('branding')">Digital Branding</button>
+    <button class="tab-btn" onclick="switchTab('demand')">Demand Generation</button>
+    <button class="tab-btn" onclick="switchTab('revops')">Revenue Ops</button>
+  </div>
+
+  <!-- SALES ENABLEMENT -->
+  <div class="tab-panel active" id="tab-sales">
+    <div class="svc-detail">
+      <div class="svc-visual" data-aos="fade-right" data-aos-duration="700">
+        <img class="svc-img" src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=900&q=80" alt="Sales Enablement">
+        <div class="svc-accent" style="background:linear-gradient(135deg,var(--green),var(--green-light));"></div>
+        <div class="svc-badge-float">
+          <div class="svc-badge-num">3<span>x</span></div>
+          <div class="svc-badge-label">Faster Close Rate</div>
+        </div>
+      </div>
+      <div class="svc-content" data-aos="fade-left" data-aos-duration="700" data-aos-delay="100">
+        <div class="section-label">01 · Sales Enablement</div>
+        <h2 class="section-title">Equip Your Team to <span class="accent">Close Faster</span></h2>
+        <p class="section-desc">We arm your sales team with the intent data, targeted content, and outreach playbooks they need to engage the right prospects at exactly the right moment — cutting sales cycles and boosting win rates.</p>
+        <div class="svc-steps">
+          <div class="svc-step">
+            <div class="step-num">1</div>
+            <div class="step-text"><h4>Ideal Customer Profiling</h4><p>Define and segment your highest-value accounts using behavioural and firmographic data.</p></div>
+          </div>
+          <div class="svc-step">
+            <div class="step-num">2</div>
+            <div class="step-text"><h4>Intent Signal Mapping</h4><p>Identify buying triggers and intent signals to reach prospects when they're most ready to engage.</p></div>
+          </div>
+          <div class="svc-step">
+            <div class="step-num">3</div>
+            <div class="step-text"><h4>Collateral & Playbooks</h4><p>Deliver customised pitch decks, battle cards, case studies, and email sequences for each segment.</p></div>
+          </div>
+          <div class="svc-step">
+            <div class="step-num">4</div>
+            <div class="step-text"><h4>Pipeline Tracking & Coaching</h4><p>Measure deal velocity, provide coaching loops, and refine messaging based on conversion data.</p></div>
+          </div>
+        </div>
+        <div class="svc-tags">
+          <span class="svc-tag">Intent Data</span>
+          <span class="svc-tag">ICP Strategy</span>
+          <span class="svc-tag">Pitch Decks</span>
+          <span class="svc-tag red">Battle Cards</span>
+          <span class="svc-tag navy">CRM Integration</span>
+          <span class="svc-tag">Email Sequences</span>
+        </div>
+        <div style="margin-top:28px;">
+          <a href="arthikforce-homepage.html#contact" class="btn-primary">Get This Service <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIFECYCLE MARKETING -->
+  <div class="tab-panel" id="tab-lifecycle">
+    <div class="svc-detail reverse">
+      <div class="svc-visual" data-aos="fade-left" data-aos-duration="700">
+        <img class="svc-img" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80" alt="Lifecycle Marketing">
+        <div class="svc-accent" style="background:linear-gradient(135deg,#a8edda,var(--green-light));"></div>
+        <div class="svc-badge-float">
+          <div class="svc-badge-num">91<span>%</span></div>
+          <div class="svc-badge-label">Client Retention Rate</div>
+        </div>
+      </div>
+      <div class="svc-content" data-aos="fade-right" data-aos-duration="700" data-aos-delay="100">
+        <div class="section-label">02 · Lifecycle Marketing</div>
+        <h2 class="section-title">Engage Buyers at <span class="accent">Every Stage</span></h2>
+        <p class="section-desc">From first awareness to renewal and expansion — we design full-funnel journeys that personalise every touchpoint, automate the right messages, and keep customers coming back.</p>
+        <div class="svc-steps">
+          <div class="svc-step"><div class="step-num">1</div><div class="step-text"><h4>Journey Mapping</h4><p>Map every stage of your buyer's journey and identify high-leverage moments for intervention.</p></div></div>
+          <div class="svc-step"><div class="step-num">2</div><div class="step-text"><h4>Segmentation & Personalisation</h4><p>Build dynamic segments based on behaviour, intent, and lifecycle stage for 1:1 relevance.</p></div></div>
+          <div class="svc-step"><div class="step-num">3</div><div class="step-text"><h4>Automated Nurture Flows</h4><p>Deploy email, in-app, and multi-channel sequences that move prospects toward conversion automatically.</p></div></div>
+          <div class="svc-step"><div class="step-num">4</div><div class="step-text"><h4>Retention & Expansion</h4><p>Systematic upsell, cross-sell, and renewal campaigns that maximise customer lifetime value.</p></div></div>
+        </div>
+        <div class="svc-tags">
+          <span class="svc-tag">Email Automation</span>
+          <span class="svc-tag">Journey Design</span>
+          <span class="svc-tag red">Segmentation</span>
+          <span class="svc-tag">Retention Programs</span>
+          <span class="svc-tag navy">LTV Optimisation</span>
+        </div>
+        <div style="margin-top:28px;"><a href="arthikforce-homepage.html#contact" class="btn-primary">Get This Service <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIGITAL BRANDING -->
+  <div class="tab-panel" id="tab-branding">
+    <div class="svc-detail">
+      <div class="svc-visual" data-aos="fade-right" data-aos-duration="700">
+        <img class="svc-img" src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=900&q=80" alt="Digital Branding">
+        <div class="svc-accent" style="background:linear-gradient(135deg,rgba(192,57,43,.4),rgba(231,76,60,.3));"></div>
+        <div class="svc-badge-float">
+          <div class="svc-badge-num">5<span>x</span></div>
+          <div class="svc-badge-label">Brand Recall Lift</div>
+        </div>
+      </div>
+      <div class="svc-content" data-aos="fade-left" data-aos-duration="700" data-aos-delay="100">
+        <div class="section-label">03 · Digital Branding</div>
+        <h2 class="section-title">Build a Brand That <span class="accent-red">Commands</span> Trust</h2>
+        <p class="section-desc">We craft compelling digital identities that make your brand the obvious choice in your market — from visual identity and positioning to thought leadership and online presence.</p>
+        <div class="svc-steps">
+          <div class="svc-step"><div class="step-num">1</div><div class="step-text"><h4>Brand Strategy & Positioning</h4><p>Define your unique value proposition, voice, and the story that sets you apart from competitors.</p></div></div>
+          <div class="svc-step"><div class="step-num">2</div><div class="step-text"><h4>Visual Identity System</h4><p>Logo, colour palette, typography, and design system that communicates authority and trust.</p></div></div>
+          <div class="svc-step"><div class="step-num">3</div><div class="step-text"><h4>Content & Thought Leadership</h4><p>LinkedIn strategy, long-form content, case studies, and whitepapers that establish market authority.</p></div></div>
+          <div class="svc-step"><div class="step-num">4</div><div class="step-text"><h4>Digital Presence Audit & Build</h4><p>Website, SEO, social profiles, and directory listings optimised for your ICP's discovery journey.</p></div></div>
+        </div>
+        <div class="svc-tags">
+          <span class="svc-tag">Brand Strategy</span>
+          <span class="svc-tag red">Visual Identity</span>
+          <span class="svc-tag">Content Marketing</span>
+          <span class="svc-tag navy">SEO</span>
+          <span class="svc-tag">Thought Leadership</span>
+        </div>
+        <div style="margin-top:28px;"><a href="arthikforce-homepage.html#contact" class="btn-primary">Get This Service <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEMAND GENERATION -->
+  <div class="tab-panel" id="tab-demand">
+    <div class="svc-detail reverse">
+      <div class="svc-visual" data-aos="fade-left" data-aos-duration="700">
+        <img class="svc-img" src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&w=900&q=80" alt="Demand Generation">
+        <div class="svc-accent" style="background:linear-gradient(135deg,rgba(62,207,142,.4),rgba(110,231,183,.3));"></div>
+        <div class="svc-badge-float">
+          <div class="svc-badge-num">38<span>%</span></div>
+          <div class="svc-badge-label">Avg. Lead-to-Close</div>
+        </div>
+      </div>
+      <div class="svc-content" data-aos="fade-right" data-aos-duration="700" data-aos-delay="100">
+        <div class="section-label">04 · Demand Generation</div>
+        <h2 class="section-title">Fill Your Pipeline with <span class="accent">High-Intent Leads</span></h2>
+        <p class="section-desc">We build multi-channel demand generation engines — combining ABM, content, paid media, and SEO to create a consistent, predictable flow of qualified prospects into your pipeline.</p>
+        <div class="svc-steps">
+          <div class="svc-step"><div class="step-num">1</div><div class="step-text"><h4>Account-Based Marketing (ABM)</h4><p>Hyper-targeted campaigns aimed at your top 100 accounts with personalised messaging at scale.</p></div></div>
+          <div class="svc-step"><div class="step-num">2</div><div class="step-text"><h4>Content-Led SEO</h4><p>Topic clusters, pillar pages, and search-optimised content that attract buyers actively researching solutions.</p></div></div>
+          <div class="svc-step"><div class="step-num">3</div><div class="step-text"><h4>Paid Media Strategy</h4><p>LinkedIn, Google, and programmatic campaigns optimised for pipeline contribution, not just clicks.</p></div></div>
+          <div class="svc-step"><div class="step-num">4</div><div class="step-text"><h4>Lead Scoring & Qualification</h4><p>Multi-touch attribution and scoring models that route only the most sales-ready leads to your team.</p></div></div>
+        </div>
+        <div class="svc-tags">
+          <span class="svc-tag">ABM</span><span class="svc-tag">Content SEO</span><span class="svc-tag red">LinkedIn Ads</span><span class="svc-tag">Google Ads</span><span class="svc-tag navy">Lead Scoring</span><span class="svc-tag">Attribution</span>
+        </div>
+        <div style="margin-top:28px;"><a href="arthikforce-homepage.html#contact" class="btn-primary">Get This Service <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVENUE OPS -->
+  <div class="tab-panel" id="tab-revops">
+    <div class="svc-detail">
+      <div class="svc-visual" data-aos="fade-right" data-aos-duration="700">
+        <img class="svc-img" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80" alt="Revenue Operations">
+        <div class="svc-accent" style="background:linear-gradient(135deg,rgba(13,31,60,.3),rgba(26,50,96,.2));"></div>
+        <div class="svc-badge-float">
+          <div class="svc-badge-num">2<span>x</span></div>
+          <div class="svc-badge-label">Reporting Efficiency</div>
+        </div>
+      </div>
+      <div class="svc-content" data-aos="fade-left" data-aos-duration="700" data-aos-delay="100">
+        <div class="section-label">05 · Revenue Operations</div>
+        <h2 class="section-title">Align Sales, Marketing & <span class="accent">Data</span></h2>
+        <p class="section-desc">We build the operational infrastructure — CRM setup, dashboards, attribution models, and reporting frameworks — that gives your leadership team clear visibility into what drives revenue.</p>
+        <div class="svc-steps">
+          <div class="svc-step"><div class="step-num">1</div><div class="step-text"><h4>CRM Audit & Optimisation</h4><p>Clean up, configure, and optimise your CRM (HubSpot, Salesforce, Zoho) for full-funnel visibility.</p></div></div>
+          <div class="svc-step"><div class="step-num">2</div><div class="step-text"><h4>Dashboard & Reporting Setup</h4><p>Build real-time dashboards that show pipeline, velocity, conversion rates, and revenue attribution.</p></div></div>
+          <div class="svc-step"><div class="step-num">3</div><div class="step-text"><h4>Multi-Touch Attribution</h4><p>Understand which channels and content pieces are actually contributing to closed revenue.</p></div></div>
+          <div class="svc-step"><div class="step-num">4</div><div class="step-text"><h4>Tech Stack Integration</h4><p>Connect your marketing automation, CRM, analytics, and data tools into a unified revenue system.</p></div></div>
+        </div>
+        <div class="svc-tags">
+          <span class="svc-tag">HubSpot</span><span class="svc-tag">Salesforce</span><span class="svc-tag red">Dashboards</span><span class="svc-tag">Attribution</span><span class="svc-tag navy">Tech Stack</span><span class="svc-tag">Reporting</span>
+        </div>
+        <div style="margin-top:28px;"><a href="arthikforce-homepage.html#contact" class="btn-primary">Get This Service <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ALL SERVICES GRID ═══ -->
+<section class="all-services" id="all-services">
+  <div class="all-services-header">
+    <div class="section-label" data-aos="fade-up" data-aos-duration="500">Full Service Menu</div>
+    <h2 class="section-title" data-aos="fade-up" data-aos-duration="600">Everything You Need to <span class="accent">Scale Revenue</span></h2>
+    <p class="section-desc" data-aos="fade-up" data-aos-duration="600" data-aos-delay="80">Pick individual services or let us build a full-stack growth engine customised for your business.</p>
+  </div>
+  <div class="services-big-grid">
+    <div class="svc-card" data-aos="fade-up" data-aos-duration="600" data-aos-delay="0">
+      <div class="svc-card-num">01</div>
+      <div class="svc-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+      <h3>Sales Enablement</h3>
+      <p>Arm your sales team with the right content, data, and playbooks to close deals faster and more consistently.</p>
+      <ul class="svc-card-features">
+        <li>Intent-based prospect targeting</li>
+        <li>Custom pitch decks & battle cards</li>
+        <li>Sales sequence automation</li>
+        <li>Deal velocity optimisation</li>
+      </ul>
+      <div class="svc-card-footer">
+        <a href="arthikforce-homepage.html#contact" class="svc-card-link">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <span class="svc-card-badge">Core</span>
+      </div>
+    </div>
+
+    <div class="svc-card" data-aos="fade-up" data-aos-duration="600" data-aos-delay="80">
+      <div class="svc-card-num">02</div>
+      <div class="svc-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+      <h3>Lifecycle Marketing</h3>
+      <p>Design full-funnel journeys that nurture, convert, and retain customers at every stage of their relationship with you.</p>
+      <ul class="svc-card-features">
+        <li>Buyer journey mapping</li>
+        <li>Automated nurture sequences</li>
+        <li>Retention & renewal campaigns</li>
+        <li>Upsell & expansion programs</li>
+      </ul>
+      <div class="svc-card-footer">
+        <a href="arthikforce-homepage.html#contact" class="svc-card-link">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <span class="svc-card-badge popular">Popular</span>
+      </div>
+    </div>
+
+    <div class="svc-card" data-aos="fade-up" data-aos-duration="600" data-aos-delay="160">
+      <div class="svc-card-num">03</div>
+      <div class="svc-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+      <h3>Digital Branding</h3>
+      <p>Build a compelling digital presence that makes your brand the trusted authority in your market and ICP's mind.</p>
+      <ul class="svc-card-features">
+        <li>Brand strategy & positioning</li>
+        <li>Visual identity system</li>
+        <li>Website & landing pages</li>
+        <li>Thought leadership content</li>
+      </ul>
+      <div class="svc-card-footer">
+        <a href="arthikforce-homepage.html#contact" class="svc-card-link">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <span class="svc-card-badge">Core</span>
+      </div>
+    </div>
+
+    <div class="svc-card" data-aos="fade-up" data-aos-duration="600" data-aos-delay="0">
+      <div class="svc-card-num">04</div>
+      <div class="svc-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
+      <h3>Demand Generation</h3>
+      <p>Build a consistent pipeline of high-intent leads using ABM, content SEO, paid media, and multi-channel outreach.</p>
+      <ul class="svc-card-features">
+        <li>Account-Based Marketing (ABM)</li>
+        <li>Content-led SEO strategy</li>
+        <li>LinkedIn & Google Ads</li>
+        <li>Lead scoring & routing</li>
+      </ul>
+      <div class="svc-card-footer">
+        <a href="arthikforce-homepage.html#contact" class="svc-card-link">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <span class="svc-card-badge popular">Popular</span>
+      </div>
+    </div>
+
+    <div class="svc-card" data-aos="fade-up" data-aos-duration="600" data-aos-delay="80">
+      <div class="svc-card-num">05</div>
+      <div class="svc-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+      <h3>Revenue Operations</h3>
+      <p>Align your revenue teams with clean data, unified dashboards, and attribution models that connect marketing spend to closed revenue.</p>
+      <ul class="svc-card-features">
+        <li>CRM audit & optimisation</li>
+        <li>Revenue dashboard build</li>
+        <li>Multi-touch attribution</li>
+        <li>Tech stack integration</li>
+      </ul>
+      <div class="svc-card-footer">
+        <a href="arthikforce-homepage.html#contact" class="svc-card-link">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <span class="svc-card-badge">Specialist</span>
+      </div>
+    </div>
+
+    <div class="svc-card" data-aos="fade-up" data-aos-duration="600" data-aos-delay="160">
+      <div class="svc-card-num">06</div>
+      <div class="svc-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <h3>Growth Strategy Consulting</h3>
+      <p>Work directly with our senior strategists to build a custom B2B growth roadmap — from ICP definition to full-funnel execution plan.</p>
+      <ul class="svc-card-features">
+        <li>ICP & market analysis</li>
+        <li>90-day growth roadmap</li>
+        <li>Channel strategy & budget plan</li>
+        <li>Quarterly strategy reviews</li>
+      </ul>
+      <div class="svc-card-footer">
+        <a href="arthikforce-homepage.html#contact" class="svc-card-link">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <span class="svc-card-badge">Premium</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROCESS ═══ -->
+<section class="process" id="process">
+  <div class="process-header">
+    <div>
+      <div class="section-label" data-aos="fade-right" data-aos-duration="500">How We Work</div>
+      <h2 class="section-title" data-aos="fade-up" data-aos-duration="600">Our <span class="accent">Engagement</span> Process</h2>
+      <p class="section-desc" data-aos="fade-up" data-aos-duration="600" data-aos-delay="80">A proven 6-step framework that takes you from discovery to a fully-running growth engine in weeks, not months.</p>
+    </div>
+    <div class="process-header-right" data-aos="fade-left" data-aos-duration="600">We believe in radical transparency. Every step is collaborative, every deliverable is accountable, and every decision is tied back to your revenue goals — not just marketing activity.</div>
+  </div>
+  <div class="process-timeline">
+    <div class="process-step" data-aos="fade-up" data-aos-duration="600" data-aos-delay="0">
+      <div class="process-num">1</div>
+      <div class="process-body">
+        <h3>Discovery & Audit</h3>
+        <p>Deep dive into your current marketing, sales process, ICP, competitive landscape, and growth blockers. We identify what's working and what's costing you pipeline.</p>
+        <div class="process-body-chips"><span class="process-chip">Kickoff Call</span><span class="process-chip">CRM Audit</span><span class="process-chip">Competitor Analysis</span></div>
+      </div>
+    </div>
+    <div class="process-step" data-aos="fade-up" data-aos-duration="600" data-aos-delay="80">
+      <div class="process-num">2</div>
+      <div class="process-body">
+        <h3>Strategy & Roadmap</h3>
+        <p>Build a custom 90-day growth roadmap with prioritised initiatives, channel mix, budget allocation, and clear KPIs tied to pipeline and revenue goals.</p>
+        <div class="process-body-chips"><span class="process-chip">90-Day Plan</span><span class="process-chip">Channel Mix</span><span class="process-chip">KPI Framework</span></div>
+      </div>
+    </div>
+    <div class="process-step" data-aos="fade-up" data-aos-duration="600" data-aos-delay="160">
+      <div class="process-num">3</div>
+      <div class="process-body">
+        <h3>Foundation & Setup</h3>
+        <p>Configure your CRM, marketing automation, analytics stack, and attribution models so every campaign is trackable from first click to closed deal.</p>
+        <div class="process-body-chips"><span class="process-chip">CRM Setup</span><span class="process-chip">Automation</span><span class="process-chip">Tracking & Tags</span></div>
+      </div>
+    </div>
+    <div class="process-step" data-aos="fade-up" data-aos-duration="600" data-aos-delay="240">
+      <div class="process-num">4</div>
+      <div class="process-body">
+        <h3>Campaign Launch</h3>
+        <p>Execute multi-channel campaigns — ABM, email sequences, paid media, content, and social — with rapid iteration cycles based on early signal data.</p>
+        <div class="process-body-chips"><span class="process-chip">ABM Campaigns</span><span class="process-chip">Paid Media</span><span class="process-chip">Email Sequences</span></div>
+      </div>
+    </div>
+    <div class="process-step" data-aos="fade-up" data-aos-duration="600" data-aos-delay="320">
+      <div class="process-num">5</div>
+      <div class="process-body">
+        <h3>Optimise & Scale</h3>
+        <p>Weekly performance reviews, A/B testing, and data-driven optimisation to improve conversion rates and reduce cost per pipeline dollar over time.</p>
+        <div class="process-body-chips"><span class="process-chip">A/B Testing</span><span class="process-chip">Weekly Reviews</span><span class="process-chip">Conversion Rate Opt.</span></div>
+      </div>
+    </div>
+    <div class="process-step" data-aos="fade-up" data-aos-duration="600" data-aos-delay="400">
+      <div class="process-num">6</div>
+      <div class="process-body">
+        <h3>Report & Expand</h3>
+        <p>Monthly executive reports with full attribution, then expanding into new channels, segments, or geographies based on what's proven to work.</p>
+        <div class="process-body-chips"><span class="process-chip">Executive Reports</span><span class="process-chip">Attribution</span><span class="process-chip">New Channel Expansion</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRICING ═══ -->
+<section class="pricing" id="pricing">
+  <div class="pricing-header">
+    <div class="section-label" data-aos="fade-up" data-aos-duration="500">Pricing</div>
+    <h2 class="section-title" data-aos="fade-up" data-aos-duration="600">Simple, <span class="accent">Transparent</span> Plans</h2>
+    <p class="section-desc" data-aos="fade-up" data-aos-duration="600" data-aos-delay="80">No hidden fees. Every plan is a fixed retainer — choose the one that matches your stage and scale up when ready.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="pricing-card" data-aos="fade-up" data-aos-duration="600" data-aos-delay="0">
+      <div class="pricing-tier">Starter</div>
+      <div class="pricing-price"><sub>₹</sub>49,999</div>
+      <div class="pricing-cycle">per month · 3-month minimum</div>
+      <div class="pricing-divider"></div>
+      <ul class="pricing-features">
+        <li class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>ICP & Buyer Persona Development</li>
+        <li class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>1 Active Campaign Channel</li>
+        <li class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Email Nurture Sequence (4 steps)</li>
+        <li class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Monthly Performance Report</li>
+        <li class="cross"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>ABM Campaigns</li>
+        <li class="cross"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>Paid Media Management</li>
+        <li class="cross"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>RevOps & CRM Setup</li>
+      </ul>
+      <a href="arthikforce-homepage.html#contact" class="pricing-btn pricing-btn-outline">Get Started</a>
+    </div>
+
+    <div class="pricing-card featured" data-aos="fade-up" data-aos-duration="600" data-aos-delay="120">
+      <div class="featured-badge">Most Popular</div>
+      <div class="pricing-tier">Growth</div>
+      <div class="pricing-price"><sub>₹</sub>1,19,999</div>
+      <div class="pricing-cycle">per month · 3-month minimum</div>
+      <div class="pricing-divider"></div>
+      <ul class="pricing-features">
+        <li class="check"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green-light)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Everything in Starter</li>
+        <li class="check"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green-light)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>3 Active Campaign Channels</li>
+        <li class="check"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green-light)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>ABM — Top 50 Accounts</li>
+        <li class="check"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green-light)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Paid Media Management (₹50K budget)</li>
+        <li class="check"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green-light)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>CRM Setup & Dashboards</li>
+        <li class="check"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green-light)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Weekly Strategy Reviews</li>
+        <li class="cross"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>Custom Brand Identity</li>
+      </ul>
+      <a href="arthikforce-homepage.html#contact" class="pricing-btn pricing-btn-filled">Get Started</a>
+    </div>
+
+    <div class="pricing-card" data-aos="fade-up" data-aos-duration="600" data-aos-delay="240">
+      <div class="pricing-tier">Enterprise</div>
+      <div class="pricing-price" style="font-size:28px;letter-spacing:-.01em;padding-top:6px;">Custom</div>
+      <div class="pricing-cycle">tailored engagement</div>
+      <div class="pricing-divider"></div>
+      <ul class="pricing-features">
+        <li class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Everything in Growth</li>
+        <li class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Unlimited Campaign Channels</li>
+        <li class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Full Brand Identity Build</li>
+        <li class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>ABM — Unlimited Accounts</li>
+        <li class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Dedicated Strategy Team</li>
+        <li class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Executive Reporting & QBRs</li>
+        <li class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Full RevOps & Tech Stack</li>
+      </ul>
+      <a href="arthikforce-homepage.html#contact" class="pricing-btn pricing-btn-outline">Talk to Sales</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ INDUSTRIES ═══ -->
+<section class="industries" id="industries">
+  <div class="industries-header">
+    <div class="section-label" data-aos="fade-up" data-aos-duration="500">Industries We Serve</div>
+    <h2 class="section-title" data-aos="fade-up" data-aos-duration="600">Specialists Across <span class="accent">15+ Sectors</span></h2>
+  </div>
+  <div class="industries-grid">
+    <div class="ind-card" data-aos="zoom-in" data-aos-duration="500" data-aos-delay="0"><div class="ind-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><h4>SaaS & Tech</h4><p>PLG and SLG motion support for B2B software companies</p></div>
+    <div class="ind-card" data-aos="zoom-in" data-aos-duration="500" data-aos-delay="60"><div class="ind-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><h4>Manufacturing</h4><p>Complex B2B sales cycles and distributor marketing</p></div>
+    <div class="ind-card" data-aos="zoom-in" data-aos-duration="500" data-aos-delay="120"><div class="ind-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><h4>Healthcare & Pharma</h4><p>HCP engagement, MedTech launches, and patient journeys</p></div>
+    <div class="ind-card" data-aos="zoom-in" data-aos-duration="500" data-aos-delay="180"><div class="ind-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div><h4>Financial Services</h4><p>BFSI demand generation with compliance-aware content</p></div>
+    <div class="ind-card" data-aos="zoom-in" data-aos-duration="500" data-aos-delay="0"><div class="ind-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg></div><h4>Retail & E-Commerce</h4><p>Wholesale B2B programs and marketplace seller growth</p></div>
+    <div class="ind-card" data-aos="zoom-in" data-aos-duration="500" data-aos-delay="60"><div class="ind-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><h4>Professional Services</h4><p>Law firms, consultancies, and accounting firm growth</p></div>
+    <div class="ind-card" data-aos="zoom-in" data-aos-duration="500" data-aos-delay="120"><div class="ind-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><h4>Real Estate & PropTech</h4><p>Developer lead gen, broker enablement, and IPC funnels</p></div>
+    <div class="ind-card" data-aos="zoom-in" data-aos-duration="500" data-aos-delay="180"><div class="ind-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h4>Logistics & Supply Chain</h4><p>Freight tech, 3PL, and supply chain solution marketing</p></div>
+  </div>
+</section>
+
+<!-- ═══ TOOLS MARQUEE ═══ -->
+<section class="tools-section">
+  <div class="tools-header">
+    <div class="section-label" data-aos="fade-up" data-aos-duration="500">Tech We Work With</div>
+    <h2 class="section-title" data-aos="fade-up" data-aos-duration="600">Integrated with Your <span class="accent">Entire Stack</span></h2>
+  </div>
+  <div class="tools-marquee-wrap" data-aos="fade-up" data-aos-duration="600" data-aos-delay="80">
+    <div class="tools-marquee">
+      <div class="tool-chip"><span class="tool-dot"></span>HubSpot</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Salesforce</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Marketo</div>
+      <div class="tool-chip"><span class="tool-dot"></span>LinkedIn Ads</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Google Ads</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Zoho CRM</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Mailchimp</div>
+      <div class="tool-chip"><span class="tool-dot"></span>ActiveCampaign</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Semrush</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Ahrefs</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Looker Studio</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Clearbit</div>
+      <div class="tool-chip"><span class="tool-dot"></span>6sense</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Outreach.io</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Apollo.io</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Segment</div>
+      <!-- duplicate for seamless loop -->
+      <div class="tool-chip"><span class="tool-dot"></span>HubSpot</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Salesforce</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Marketo</div>
+      <div class="tool-chip"><span class="tool-dot"></span>LinkedIn Ads</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Google Ads</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Zoho CRM</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Mailchimp</div>
+      <div class="tool-chip"><span class="tool-dot"></span>ActiveCampaign</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Semrush</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Ahrefs</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Looker Studio</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Clearbit</div>
+      <div class="tool-chip"><span class="tool-dot"></span>6sense</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Outreach.io</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Apollo.io</div>
+      <div class="tool-chip"><span class="tool-dot"></span>Segment</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ RESULTS ═══ -->
+<section class="results">
+  <div class="results-header">
+    <div class="section-label" data-aos="fade-up" data-aos-duration="500">Proven Results</div>
+    <h2 class="section-title" data-aos="fade-up" data-aos-duration="600">Numbers That <span class="accent">Speak for Themselves</span></h2>
+  </div>
+  <div class="results-grid">
+    <div class="result-card" data-aos="zoom-in" data-aos-duration="500" data-aos-delay="0"><div class="result-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><div class="result-num">150<span>+</span></div><div class="result-label">B2B Clients Served</div></div>
+    <div class="result-card" data-aos="zoom-in" data-aos-duration="500" data-aos-delay="80"><div class="result-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg></div><div class="result-num">38<span>%</span></div><div class="result-label">Avg. Lead-to-Close Rate</div></div>
+    <div class="result-card" data-aos="zoom-in" data-aos-duration="500" data-aos-delay="160"><div class="result-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="result-num">91<span>%</span></div><div class="result-label">Client Retention Rate</div></div>
+    <div class="result-card" data-aos="zoom-in" data-aos-duration="500" data-aos-delay="240"><div class="result-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div><div class="result-num">2<span>wk</span></div><div class="result-label">Avg. Time to First Campaign</div></div>
+  </div>
+  <div class="case-strip" data-aos="fade-up" data-aos-duration="700">
+    <div class="case-strip-text">
+      <h3>TechScale Inc. — From 12 to 47 qualified leads/month in 90 days</h3>
+      <p>Using our intent-based lifecycle marketing program, TechScale grew their pipeline by 3× and reduced their average sales cycle from 68 days to 41 days.</p>
+      <div style="margin-top:20px;"><a href="arthikforce-homepage.html#contact" class="btn-green">See Full Case Study <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+    </div>
+    <div class="case-strip-stats" data-aos="fade-left" data-aos-duration="600" data-aos-delay="150">
+      <div><div class="cs-stat-num">3<span>x</span></div><div class="cs-stat-label">Pipeline Growth</div></div>
+      <div><div class="cs-stat-num">41<span>d</span></div><div class="cs-stat-label">Sales Cycle</div></div>
+      <div><div class="cs-stat-num">47<span>+</span></div><div class="cs-stat-label">MQLs / Month</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section class="faq">
+  <div class="faq-grid">
+    <div>
+      <div class="section-label" data-aos="fade-right" data-aos-duration="500">FAQ</div>
+      <h2 class="section-title" data-aos="fade-up" data-aos-duration="600">Common <span class="accent">Questions</span></h2>
+      <div class="faq-items" style="margin-top:32px;" data-aos="fade-up" data-aos-duration="600" data-aos-delay="80">
+        <div class="faq-item open">
+          <button class="faq-question" onclick="toggleFaq(this)">How quickly will I see results?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Most clients see initial pipeline movement within 30–45 days. Full results — including consistent MQL flow and measurable revenue attribution — typically appear in months 2 and 3. We set realistic expectations in the onboarding roadmap.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">Do you work with early-stage startups?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Yes — our Starter plan is designed for companies at the £100K–₹1Cr ARR stage. We help you build the foundations: ICP, messaging, first outbound channels, and basic tracking. You need a defined product and at least 2–3 existing customers to start.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">What CRMs do you support?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div></button>
+          <div class="faq-answer"><div class="faq-answer-inner">We work with HubSpot, Salesforce, Zoho CRM, Pipedrive, and most modern CRMs. If you don't have a CRM yet, we'll recommend and set up the right one for your stage as part of the onboarding process.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">Can I add services during my engagement?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Absolutely. Most clients start with one or two services and expand as results prove ROI. We structure engagements to be modular — you can add demand gen, branding, or RevOps to any running retainer with 2 weeks' notice.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">Is there a minimum contract length?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div></button>
+          <div class="faq-answer"><div class="faq-answer-inner">All plans have a 3-month minimum engagement — not because we need to lock you in, but because growth marketing takes time to produce meaningful results. After 3 months, you move to a monthly rolling contract with 30 days' notice to exit.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">Do you guarantee results?<div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div></button>
+          <div class="faq-answer"><div class="faq-answer-inner">We don't offer guaranteed pipeline numbers — no honest agency does. But we do guarantee transparent reporting, a defined KPI framework agreed upfront, and a team that will iterate aggressively if early campaigns underperform. Our 91% retention rate reflects that commitment.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div data-aos="fade-left" data-aos-duration="700">
+      <div class="faq-cta-box">
+        <h3>Still have questions?</h3>
+        <p>Our team is available to answer any questions about our services, pricing, or how we can help your specific business situation.</p>
+        <div class="faq-cta-contacts">
+          <a href="https://wa.me/919841614141" class="faq-contact-row" target="_blank">
+            <div class="faq-ci wa"><svg viewBox="0 0 32 32" fill="#25d366" width="18" height="18"><path d="M16 3C9.373 3 4 8.373 4 15c0 2.385.832 4.584 2.219 6.334L4.5 28l6.875-1.688A12.93 12.93 0 0016 27c6.627 0 12-5.373 12-12S22.627 3 16 3zm5.406 13.48c-.296-.148-1.75-.864-2.022-.963-.271-.1-.469-.148-.666.149-.198.296-.766.963-.939 1.16-.173.198-.346.222-.642.074-.296-.148-1.25-.46-2.38-1.47-.88-.783-1.474-1.75-1.647-2.046-.173-.296-.018-.456.13-.604.133-.132.296-.346.444-.519.148-.173.198-.296.296-.494.1-.198.05-.372-.025-.52-.074-.148-.666-1.61-.913-2.202-.24-.578-.484-.5-.666-.51a12.3 12.3 0 00-.57-.011c-.198 0-.52.074-.792.371-.271.296-1.04 1.017-1.04 2.479s1.065 2.875 1.213 3.073c.148.198 2.095 3.2 5.076 4.487.71.307 1.264.49 1.695.627.712.226 1.36.194 1.872.118.571-.085 1.75-.716 1.997-1.406.247-.69.247-1.28.173-1.406-.074-.123-.272-.198-.568-.346z"/></svg></div>
+            <div><div class="faq-contact-label">WhatsApp</div><div class="faq-contact-val">+91 98416 14141</div></div>
+          </a>
+          <a href="tel:+919841614141" class="faq-contact-row">
+            <div class="faq-ci ph"><svg viewBox="0 0 24 24" fill="var(--green-mid)" width="18" height="18"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.47 11.47 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.47 11.47 0 00.57 3.58 1 1 0 01-.25 1.01l-2.2 2.2z"/></svg></div>
+            <div><div class="faq-contact-label">Phone</div><div class="faq-contact-val">+91 98416 14141</div></div>
+          </a>
+          <a href="mailto:hello@arthikforce.com" class="faq-contact-row">
+            <div class="faq-ci em"><svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.8" width="18" height="18"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg></div>
+            <div><div class="faq-contact-label">Email</div><div class="faq-contact-val">hello@arthikforce.com</div></div>
+          </a>
+        </div>
+        <a href="arthikforce-homepage.html#contact" class="btn-primary" style="width:100%;justify-content:center;">
+          Book Free Strategy Call
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA STRIP ═══ -->
+<div class="cta-strip">
+  <div class="cta-strip-text" data-aos="fade-right" data-aos-duration="600">
+    <h2>Ready to Build Your Growth Engine?</h2>
+    <p>Let's match the right services to your goals — book a free 30-minute strategy call.</p>
+  </div>
+  <a href="arthikforce-homepage.html#contact" class="btn-white" data-aos="fade-left" data-aos-duration="600">
+    Book Free Strategy Call
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand-col" data-aos="fade-up" data-aos-duration="600">
+      <div class="footer-brand">Arthik<span>Force</span></div>
+      <div class="footer-tagline">For Accelerated Growth</div>
+      <p>Intent-driven B2B marketing that connects your message to the right audience — turning strategy into steady, scalable revenue.</p>
+    </div>
+    <div class="footer-col" data-aos="fade-up" data-aos-duration="600" data-aos-delay="80">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#">Sales Enablement</a></li>
+        <li><a href="#">Lifecycle Marketing</a></li>
+        <li><a href="#">Digital Branding</a></li>
+        <li><a href="#">Demand Generation</a></li>
+        <li><a href="#">Revenue Operations</a></li>
+      </ul>
+    </div>
+    <div class="footer-col" data-aos="fade-up" data-aos-duration="600" data-aos-delay="160">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="arthikforce-homepage.html#about">About Us</a></li>
+        <li><a href="arthikforce-homepage.html#testimonials">Client Stories</a></li>
+        <li><a href="arthikforce-homepage.html#why-choose">Why Us</a></li>
+        <li><a href="arthikforce-homepage.html#contact">Careers</a></li>
+      </ul>
+    </div>
+    <div class="footer-col" data-aos="fade-up" data-aos-duration="600" data-aos-delay="240">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:hello@arthikforce.com">hello@arthikforce.com</a></li>
+        <li><a href="tel:+919841614141">+91 98416 14141</a></li>
+        <li><a href="https://wa.me/919841614141" target="_blank">WhatsApp Chat</a></li>
+        <li><a href="https://www.arthikforce.com" target="_blank">www.arthikforce.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 ArthikForce. All rights reserved.</p>
+    <div class="footer-socials">
+      <a href="https://www.facebook.com/" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+      <a href="https://www.instagram.com/" target="_blank"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/></svg></a>
+      <a href="https://x.com/" target="_blank"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <a href="https://www.linkedin.com/" target="_blank"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+AOS.init({once:true,easing:'ease-out-cubic',offset:50});
+
+// NAV scroll
+window.addEventListener('scroll',()=>{
+  document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>60);
+},{passive:true});
+
+// Hamburger
+const hamburger=document.getElementById('hamburger');
+const mobileMenu=document.getElementById('mobileMenu');
+hamburger.addEventListener('click',()=>{
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+document.querySelectorAll('.mobile-menu a').forEach(a=>{
+  a.addEventListener('click',()=>{hamburger.classList.remove('open');mobileMenu.classList.remove('open');});
+});
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+  });
+});
+
+// Tabs
+function switchTab(id){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+  // re-trigger AOS for newly visible elements
+  setTimeout(()=>AOS.refresh(),50);
+}
+
+// FAQ accordion
+function toggleFaq(btn){
+  const item=btn.parentElement;
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  if(!isOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>
